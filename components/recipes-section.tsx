@@ -1,0 +1,104 @@
+"use client"
+
+import { useRef, useState } from "react"
+import { recipes } from "@/lib/recipes"
+import { RecipeCard } from "@/components/recipe-card"
+import { AnimatedText } from "@/components/animated-text"
+
+type RecipesSectionProps = {
+  onOpenRecipe: (slug: string) => void
+}
+
+export function RecipesSection({ onOpenRecipe }: RecipesSectionProps) {
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  const [isDown, setIsDown] = useState(false)
+  const dragState = useRef({ startX: 0, scrollLeft: 0, moved: false })
+
+  const scrollByAmount = (dir: 1 | -1) => {
+    const el = scrollerRef.current
+    if (!el) return
+    el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" })
+  }
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    const el = scrollerRef.current
+    if (!el) return
+    setIsDown(true)
+    dragState.current = { startX: e.clientX, scrollLeft: el.scrollLeft, moved: false }
+  }
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!isDown) return
+    const el = scrollerRef.current
+    if (!el) return
+    const delta = e.clientX - dragState.current.startX
+    if (Math.abs(delta) > 4) dragState.current.moved = true
+    el.scrollLeft = dragState.current.scrollLeft - delta
+  }
+
+  const endDrag = () => setIsDown(false)
+
+  return (
+    <section id="ricette" className="relative overflow-hidden bg-cream py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-5 sm:px-10 lg:px-16">
+        <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
+          <div className="max-w-xl">
+            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-basil-green">Ricette</span>
+            <AnimatedText
+              as="h2"
+              text="Piatti pensati per la tavola di tutti i giorni"
+              className="mt-3 font-display text-3xl font-bold leading-tight text-anthracite sm:text-4xl lg:text-5xl"
+            />
+            <p className="mt-4 text-base leading-relaxed text-anthracite/65 sm:text-lg">
+              Scorri o trascina le card per scoprire alcune delle nostre ricette più amate, pensate per portare la
+              tradizione italiana in tavola in pochi minuti.
+            </p>
+          </div>
+
+          <div className="hidden shrink-0 items-center gap-3 sm:flex">
+            <button
+              type="button"
+              onClick={() => scrollByAmount(-1)}
+              aria-label="Ricetta precedente"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByAmount(1)}
+              aria-label="Ricetta successiva"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream"
+            >
+              →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        ref={scrollerRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+        className={`mt-12 flex gap-5 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:gap-6 sm:px-10 lg:px-16 [&::-webkit-scrollbar]:hidden ${
+          isDown ? "cursor-grabbing" : "cursor-grab"
+        }`}
+        style={{ scrollSnapType: isDown ? "none" : "x proximity" }}
+      >
+        {recipes.map((recipe) => (
+          <div key={recipe.slug} style={{ scrollSnapAlign: "start" }}>
+            <RecipeCard
+              recipe={recipe}
+              onOpen={(slug) => {
+                if (!dragState.current.moved) onOpenRecipe(slug)
+              }}
+            />
+          </div>
+        ))}
+        <div className="w-1 flex-shrink-0" aria-hidden />
+      </div>
+    </section>
+  )
+}

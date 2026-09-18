@@ -1,10 +1,33 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Dancing_Script, Manrope, Playfair_Display } from 'next/font/google'
 import './globals.css'
 
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-display',
+  weight: ['500', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
+const dancingScript = Dancing_Script({
+  subsets: ['latin'],
+  variable: '--font-logo',
+  weight: ['600', '700'],
+  display: 'swap',
+})
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Giovanni Rana | Pasta fresca italiana dal 1962',
+  description:
+    "Scopri la storia, i valori e le ricette di Giovanni Rana: pasta fresca artigianale italiana, tradizione di famiglia e passione autentica dal 1962.",
   generator: 'v0.app',
   icons: {
     icon: [
@@ -26,11 +49,9 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  colorScheme: 'light',
+  themeColor: '#FFF4DC',
+  userScalable: true,
 }
 
 export default function RootLayout({
@@ -39,8 +60,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="it" className={`${playfair.variable} ${manrope.variable}`}>
+      <body className="antialiased bg-cream text-anthracite font-sans">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
