@@ -11,7 +11,12 @@ export function Hero() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (reduceMotion) return
+
+    if (reduceMotion) {
+      // Ensure the intro block is visible when motion is disabled.
+      if (introRef.current) gsap.set(introRef.current, { opacity: 1, y: 0 })
+      return
+    }
 
     const onScroll = () => {
       const y = window.scrollY
@@ -27,7 +32,16 @@ export function Hero() {
       { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 1.1 },
     )
 
-    return () => window.removeEventListener("scroll", onScroll)
+    // Safety net so the intro block never stays invisible if the tween
+    // is interrupted (e.g. Fast Refresh) before completing.
+    const failSafe = window.setTimeout(() => {
+      if (introRef.current) gsap.set(introRef.current, { opacity: 1, y: 0 })
+    }, 2500)
+
+    return () => {
+      window.clearTimeout(failSafe)
+      window.removeEventListener("scroll", onScroll)
+    }
   }, [])
 
   return (
