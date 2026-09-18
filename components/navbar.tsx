@@ -44,8 +44,9 @@ export function Navbar() {
         >
           <a href="#top" aria-label="Giovanni Rana, torna alla home" className="flex items-center">
             <Logo
-              invert={!scrolled}
-              className={`text-2xl transition-all duration-500 sm:text-3xl ${scrolled ? "" : "drop-shadow-sm"}`}
+              className={`h-10 w-24 transition-all duration-500 sm:h-12 sm:w-28 ${
+                scrolled ? "shadow-md shadow-anthracite/10" : "drop-shadow-md"
+              }`}
             />
           </a>
 
