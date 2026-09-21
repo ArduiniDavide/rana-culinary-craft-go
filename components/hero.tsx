@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react"
 import Image from "next/image"
 import { gsap } from "gsap"
 import { AnimatedText } from "@/components/animated-text"
+import { IMAGES } from "@/lib/images"
 
 export function Hero() {
   const imageRef = useRef<HTMLDivElement>(null)
@@ -13,16 +14,21 @@ export function Hero() {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
     if (reduceMotion) {
-      // Ensure the intro block is visible when motion is disabled.
       if (introRef.current) gsap.set(introRef.current, { opacity: 1, y: 0 })
       return
     }
 
+    let ticking = false
     const onScroll = () => {
-      const y = window.scrollY
-      if (imageRef.current) {
-        gsap.set(imageRef.current, { y: y * 0.35 })
-      }
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const y = window.scrollY
+        if (imageRef.current) {
+          gsap.set(imageRef.current, { y: y * 0.35 })
+        }
+        ticking = false
+      })
     }
     window.addEventListener("scroll", onScroll, { passive: true })
 
@@ -32,8 +38,6 @@ export function Hero() {
       { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 1.1 },
     )
 
-    // Safety net so the intro block never stays invisible if the tween
-    // is interrupted (e.g. Fast Refresh) before completing.
     const failSafe = window.setTimeout(() => {
       if (introRef.current) gsap.set(introRef.current, { opacity: 1, y: 0 })
     }, 2500)
@@ -45,13 +49,18 @@ export function Hero() {
   }, [])
 
   return (
-    <section id="top" className="relative flex h-[100vh] min-h-[640px] w-full items-end overflow-hidden bg-anthracite">
+    <section
+      id="top"
+      className="relative flex min-h-[100svh] w-full items-end overflow-hidden bg-anthracite"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
       <div ref={imageRef} className="absolute inset-0 -top-24 h-[calc(100%+6rem)] w-full">
         <Image
-          src="/images/hero-bg.png"
+          src={IMAGES.hero}
           alt="Famiglia italiana prepara pasta fresca a mano in cucina"
           fill
           priority
+          sizes="100vw"
           className="object-cover object-center"
         />
       </div>
@@ -68,9 +77,12 @@ export function Hero() {
       <div className="absolute -right-24 top-1/3 h-72 w-72 rounded-full bg-pasta-yellow/20 blur-3xl sm:h-96 sm:w-96" />
       <div className="absolute -left-16 bottom-24 h-56 w-56 rounded-full bg-tomato-red/25 blur-3xl" />
 
-      <div className="relative z-10 flex w-full flex-col gap-8 px-5 pb-16 sm:px-10 sm:pb-24 lg:px-16">
+      <div
+        className="relative z-10 flex w-full flex-col gap-6 px-5 pb-16 sm:gap-8 sm:px-10 sm:pb-24 lg:px-16"
+        style={{ paddingBottom: "max(env(safe-area-inset-bottom), 4rem)" }}
+      >
         <div className="max-w-4xl">
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-cream/25 bg-cream/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-cream backdrop-blur-sm">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-cream/25 bg-cream/10 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-cream backdrop-blur-sm sm:mb-6 sm:text-xs">
             Pasta fresca artigianale
           </span>
 
@@ -79,19 +91,22 @@ export function Hero() {
             text={"La tradizione italiana\nche si fa a mano, ogni giorno."}
             splitBy="lines"
             start="top 100%"
-            className="font-display text-[clamp(2.4rem,6.5vw,5.5rem)] font-bold leading-[1.02] tracking-tight text-cream"
+            className="font-display text-[clamp(2rem,7vw,5.5rem)] font-bold leading-[1.05] tracking-tight text-cream"
           />
 
-          <div ref={introRef} className="mt-8 flex flex-col gap-8 opacity-0 sm:flex-row sm:items-end sm:justify-between">
-            <p className="max-w-md text-base leading-relaxed text-cream/80 sm:text-lg">
+          <div
+            ref={introRef}
+            className="mt-6 flex flex-col gap-6 opacity-0 sm:mt-8 sm:flex-row sm:items-end sm:justify-between sm:gap-8"
+          >
+            <p className="max-w-md text-sm leading-relaxed text-cream/80 sm:text-base sm:text-lg">
               Ingredienti veri, ricette di famiglia e la cura artigianale di chi crede che il buon cibo unisca le
               persone attorno a un tavolo.
             </p>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <a
                 href="#ricette"
-                className="group inline-flex items-center gap-2 rounded-full bg-tomato-red px-7 py-3.5 text-sm font-semibold text-cream transition-all duration-300 hover:bg-cream hover:text-anthracite"
+                className="group inline-flex items-center gap-2 rounded-full bg-tomato-red px-6 py-3 text-xs font-semibold text-cream transition-all duration-300 hover:bg-cream hover:text-anthracite sm:px-7 sm:py-3.5 sm:text-sm"
               >
                 Scopri le ricette
                 <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
@@ -100,7 +115,7 @@ export function Hero() {
               </a>
               <a
                 href="#storia"
-                className="inline-flex items-center gap-2 rounded-full border border-cream/40 px-7 py-3.5 text-sm font-semibold text-cream transition-all duration-300 hover:border-cream hover:bg-cream/10"
+                className="inline-flex items-center gap-2 rounded-full border border-cream/40 px-6 py-3 text-xs font-semibold text-cream transition-all duration-300 hover:border-cream hover:bg-cream/10 sm:px-7 sm:py-3.5 sm:text-sm"
               >
                 La nostra storia
               </a>
@@ -109,7 +124,10 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-cream/70">
+      <div
+        className="absolute bottom-4 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-cream/70 sm:flex"
+        aria-hidden
+      >
         <span className="text-[10px] uppercase tracking-[0.3em]">Scorri</span>
         <span className="h-9 w-px animate-pulse bg-cream/50" />
       </div>

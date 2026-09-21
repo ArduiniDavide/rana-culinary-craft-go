@@ -5,6 +5,7 @@ import Image from "next/image"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { AnimatedText } from "@/components/animated-text"
+import { IMAGES } from "@/lib/images"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -61,7 +62,7 @@ export function StatisticsSection() {
     <section id="numeri" ref={sectionRef} className="relative overflow-hidden bg-anthracite py-24 sm:py-32">
       <div className="absolute inset-0 opacity-25">
         <Image
-          src="/images/stats-bg.png"
+          src={IMAGES.statsBg}
           alt=""
           fill
           className="object-cover object-center"

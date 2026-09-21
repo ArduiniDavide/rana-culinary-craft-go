@@ -1,3 +1,5 @@
+import { RECIPE_IMAGES } from "@/lib/images"
+
 export type Recipe = {
   slug: string
   name: string
@@ -19,7 +21,7 @@ export const recipes: Recipe[] = [
       "Gnocchi di patate morbidi e delicati, conditi con burro fuso, salvia fresca e una generosa spolverata di parmigiano.",
     time: "20 min",
     servings: "4 persone",
-    image: "/images/recipe-gnocchi.png",
+    image: RECIPE_IMAGES["gnocchi-burro-e-salvia"],
     ingredients: [
       "500 g di gnocchi di patate freschi",
       "80 g di burro",
@@ -43,7 +45,7 @@ export const recipes: Recipe[] = [
       "Il piatto della domenica per eccellenza: tortellini ripieni cotti lentamente in un brodo di carne limpido e profumato.",
     time: "35 min",
     servings: "4 persone",
-    image: "/images/recipe-tortellini.png",
+    image: RECIPE_IMAGES["tortellini-in-brodo"],
     ingredients: [
       "400 g di tortellini freschi",
       "1,5 l di brodo di carne fatto in casa",
@@ -67,7 +69,7 @@ export const recipes: Recipe[] = [
       "Strati sottili di pasta fresca all'uovo, ragù di carne cotto a lungo e besciamella cremosa, gratinati al forno fino a doratura.",
     time: "1 h 15 min",
     servings: "6 persone",
-    image: "/images/recipe-lasagne.png",
+    image: RECIPE_IMAGES["lasagne-alla-bolognese"],
     ingredients: [
       "12 sfoglie di lasagne fresche",
       "800 g di ragù di carne",
@@ -92,7 +94,7 @@ export const recipes: Recipe[] = [
       "Ravioli dal cuore morbido di ricotta e spinaci, conditi con burro fuso, salvia croccante e scaglie di parmigiano.",
     time: "15 min",
     servings: "4 persone",
-    image: "/images/recipe-ravioli.png",
+    image: RECIPE_IMAGES["ravioli-ricotta-e-spinaci"],
     ingredients: [
       "500 g di ravioli ricotta e spinaci freschi",
       "70 g di burro",
@@ -116,7 +118,7 @@ export const recipes: Recipe[] = [
       "Tagliatelle all'uovo ruvide e porose, perfette per trattenere un ragù di carne cotto lentamente per ore.",
     time: "25 min",
     servings: "4 persone",
-    image: "/images/recipe-tagliatelle.png",
+    image: RECIPE_IMAGES["tagliatelle-al-ragu"],
     ingredients: [
       "400 g di tagliatelle fresche all'uovo",
       "500 g di ragù di carne",
@@ -140,7 +142,7 @@ export const recipes: Recipe[] = [
       "Piccoli cappelletti ripieni di carne e parmigiano, conditi in modo semplice per esaltarne il ripieno saporito.",
     time: "15 min",
     servings: "4 persone",
-    image: "/images/recipe-cappelletti.png",
+    image: RECIPE_IMAGES["cappelletti-burro-e-parmigiano"],
     ingredients: [
       "450 g di cappelletti freschi",
       "60 g di burro",

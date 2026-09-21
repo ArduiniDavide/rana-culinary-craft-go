@@ -55,12 +55,8 @@ export function AnimatedText({
       },
     })
 
-    // Recalculate trigger positions once the layout/images settle so
-    // above-the-fold text is not left stuck at opacity 0 in the preview.
     ScrollTrigger.refresh()
 
-    // Safety net: if the ScrollTrigger never fires (interrupted tween,
-    // late layout, iframe scroll quirks), force the text visible.
     const failSafe = window.setTimeout(() => {
       gsap.set(pieces, { opacity: 1, y: 0 })
     }, 2000)

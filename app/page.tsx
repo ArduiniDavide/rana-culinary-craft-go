@@ -8,6 +8,7 @@ import { StatisticsSection } from "@/components/statistics-section"
 import { RecipesSection } from "@/components/recipes-section"
 import { RecipeDetail } from "@/components/recipe-detail"
 import { Footer } from "@/components/footer"
+import { ConsentPopup } from "@/components/consent-popup"
 import { getRecipeBySlug } from "@/lib/recipes"
 
 export default function Page() {
@@ -27,6 +28,7 @@ export default function Page() {
       <RecipesSection onOpenRecipe={handleOpen} />
       <Footer />
       <RecipeDetail recipe={activeRecipe} onClose={handleClose} />
+      <ConsentPopup />
     </main>
   )
 }

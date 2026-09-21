@@ -39,28 +39,28 @@ export function RecipesSection({ onOpenRecipe }: RecipesSectionProps) {
   const endDrag = () => setIsDown(false)
 
   return (
-    <section id="ricette" className="relative overflow-hidden bg-cream py-24 sm:py-32">
+    <section id="ricette" className="relative overflow-hidden bg-cream py-20 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-10 lg:px-16">
-        <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end sm:gap-8">
           <div className="max-w-xl">
             <span className="text-sm font-semibold uppercase tracking-[0.2em] text-basil-green">Ricette</span>
             <AnimatedText
               as="h2"
               text="Piatti pensati per la tavola di tutti i giorni"
-              className="mt-3 font-display text-3xl font-bold leading-tight text-anthracite sm:text-4xl lg:text-5xl"
+              className="mt-3 font-display text-2xl font-bold leading-tight text-anthracite sm:text-4xl lg:text-5xl"
             />
-            <p className="mt-4 text-base leading-relaxed text-anthracite/65 sm:text-lg">
+            <p className="mt-4 text-sm leading-relaxed text-anthracite/65 sm:text-base sm:text-lg">
               Scorri o trascina le card per scoprire alcune delle nostre ricette più amate, pensate per portare la
               tradizione italiana in tavola in pochi minuti.
             </p>
           </div>
 
-          <div className="hidden shrink-0 items-center gap-3 sm:flex">
+          <div className="flex shrink-0 items-center gap-3 sm:hidden">
             <button
               type="button"
               onClick={() => scrollByAmount(-1)}
               aria-label="Ricetta precedente"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tomato-red/40"
             >
               ←
             </button>
@@ -68,7 +68,26 @@ export function RecipesSection({ onOpenRecipe }: RecipesSectionProps) {
               type="button"
               onClick={() => scrollByAmount(1)}
               aria-label="Ricetta successiva"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tomato-red/40"
+            >
+              →
+            </button>
+          </div>
+
+          <div className="hidden shrink-0 items-center gap-3 sm:flex">
+            <button
+              type="button"
+              onClick={() => scrollByAmount(-1)}
+              aria-label="Ricetta precedente"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tomato-red/40"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByAmount(1)}
+              aria-label="Ricetta successiva"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-anthracite/15 text-anthracite transition-colors hover:border-tomato-red hover:bg-tomato-red hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tomato-red/40"
             >
               →
             </button>
@@ -82,10 +101,10 @@ export function RecipesSection({ onOpenRecipe }: RecipesSectionProps) {
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerLeave={endDrag}
-        className={`mt-12 flex gap-5 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:gap-6 sm:px-10 lg:px-16 [&::-webkit-scrollbar]:hidden ${
+        className={`mt-10 flex gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:mt-12 sm:gap-6 sm:px-10 lg:px-16 [&::-webkit-scrollbar]:hidden ${
           isDown ? "cursor-grabbing" : "cursor-grab"
         }`}
-        style={{ scrollSnapType: isDown ? "none" : "x proximity" }}
+        style={{ scrollSnapType: isDown ? "none" : "x proximity", WebkitOverflowScrolling: "touch" }}
       >
         {recipes.map((recipe) => (
           <div key={recipe.slug} style={{ scrollSnapAlign: "start" }}>

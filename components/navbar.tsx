@@ -32,30 +32,35 @@ export function Navbar() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 flex justify-center transition-all duration-500 ${
-          scrolled ? "pt-3 sm:pt-4" : "pt-0"
+          scrolled ? "pt-2 sm:pt-4" : "pt-0"
         }`}
+        style={{ paddingTop: scrolled ? "max(env(safe-area-inset-top), 0.5rem)" : "env(safe-area-inset-top)" }}
       >
         <div
           className={`flex w-full items-center justify-between transition-all duration-500 ease-out ${
             scrolled
-              ? "mx-4 max-w-4xl rounded-full border border-anthracite/10 bg-cream/80 px-5 py-2.5 shadow-lg shadow-anthracite/10 backdrop-blur-xl sm:px-7"
-              : "max-w-none rounded-none border-transparent bg-transparent px-5 py-5 sm:px-10 sm:py-7"
+              ? "mx-3 max-w-4xl rounded-full border border-anthracite/10 bg-cream/85 px-4 py-2.5 shadow-lg shadow-anthracite/10 backdrop-blur-xl sm:mx-4 sm:px-7"
+              : "max-w-none rounded-none border-transparent bg-transparent px-4 py-4 sm:px-10 sm:py-7"
           }`}
         >
-          <a href="#top" aria-label="Giovanni Rana, torna alla home" className="flex items-center">
+          <a
+            href="#top"
+            aria-label="Giovanni Rana, torna alla home"
+            className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream/60 focus-visible:ring-offset-2 focus-visible:ring-offset-anthracite rounded-lg"
+          >
             <Logo
-              className={`h-10 w-24 transition-all duration-500 sm:h-12 sm:w-28 ${
+              className={`h-9 w-20 transition-all duration-500 sm:h-12 sm:w-28 ${
                 scrolled ? "shadow-md shadow-anthracite/10" : "drop-shadow-md"
               }`}
             />
           </a>
 
-          <nav className="hidden items-center gap-8 md:flex">
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Navigazione principale">
             {LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium tracking-wide transition-colors ${
+                className={`text-sm font-medium tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/40 rounded ${
                   scrolled ? "text-anthracite hover:text-tomato-red" : "text-cream hover:text-pasta-yellow"
                 }`}
               >
@@ -64,7 +69,7 @@ export function Navbar() {
             ))}
             <a
               href="#ricette"
-              className={`rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${
+              className={`rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-current/40 ${
                 scrolled
                   ? "bg-tomato-red text-cream hover:bg-anthracite"
                   : "bg-cream text-anthracite hover:bg-pasta-yellow"
@@ -80,7 +85,7 @@ export function Navbar() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Chiudi il menu" : "Apri il menu"}
-            className="relative z-50 flex h-9 w-9 flex-col items-center justify-center gap-[6px] md:hidden"
+            className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-[6px] rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream/60 md:hidden"
           >
             <span
               className={`h-[2px] w-6 rounded-full transition-all duration-300 ease-out ${

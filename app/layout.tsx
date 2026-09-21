@@ -24,25 +24,77 @@ const manrope = Manrope({
   display: 'swap',
 })
 
+const siteUrl = 'https://giovanni-rana.example.com'
+
 export const metadata: Metadata = {
-  title: 'Giovanni Rana | Pasta fresca italiana dal 1962',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Giovanni Rana | Pasta fresca italiana dal 1962',
+    template: '%s | Giovanni Rana',
+  },
   description:
     "Scopri la storia, i valori e le ricette di Giovanni Rana: pasta fresca artigianale italiana, tradizione di famiglia e passione autentica dal 1962.",
+  keywords: [
+    'Giovanni Rana',
+    'pasta fresca',
+    'pasta artigianale',
+    'ricette italiane',
+    'tradizione italiana',
+    'tortellini',
+    'gnocchi',
+    'lasagne',
+    'ravioli',
+    'tagliatelle',
+  ],
+  authors: [{ name: 'Davide Arduini' }],
+  creator: 'Davide Arduini',
+  publisher: 'Giovanni Rana',
+  alternates: {
+    canonical: '/',
+    languages: { 'it-IT': '/' },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'it_IT',
+    url: siteUrl,
+    siteName: 'Giovanni Rana',
+    title: 'Giovanni Rana | Pasta fresca italiana dal 1962',
+    description:
+      'Ingredienti veri, ricette di famiglia e la cura artigianale di chi crede che il buon cibo unisca le persone attorno a un tavolo.',
+    images: [
+      {
+        url: '/images/hero-bg.png',
+        width: 1200,
+        height: 630,
+        alt: 'Famiglia italiana prepara pasta fresca a mano in cucina',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Giovanni Rana | Pasta fresca italiana dal 1962',
+    description:
+      'Ingredienti veri, ricette di famiglia e la cura artigianale di chi crede che il buon cibo unisca le persone attorno a un tavolo.',
+    images: ['/images/hero-bg.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  category: 'food & drink',
   generator: 'v0.app',
   icons: {
     icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
+      { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
+      { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: '/apple-icon.png',
   },
@@ -52,6 +104,7 @@ export const viewport: Viewport = {
   colorScheme: 'light',
   themeColor: '#FFF4DC',
   userScalable: true,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -60,7 +113,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="it" className={`${playfair.variable} ${manrope.variable}`}>
+    <html
+      lang="it"
+      className={`${playfair.variable} ${manrope.variable} ${dancingScript.variable}`}
+    >
       <body className="antialiased bg-cream text-anthracite font-sans">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
