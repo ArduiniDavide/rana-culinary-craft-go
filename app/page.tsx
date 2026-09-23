@@ -9,6 +9,7 @@ import { RecipesSection } from "@/components/recipes-section"
 import { RecipeDetail } from "@/components/recipe-detail"
 import { Footer } from "@/components/footer"
 import { ConsentPopup } from "@/components/consent-popup"
+import { useSmoothScroll } from "@/hooks/use-smooth-scroll"
 import { getRecipeBySlug } from "@/lib/recipes"
 
 export default function Page() {
@@ -18,6 +19,8 @@ export default function Page() {
   const handleClose = useCallback(() => setOpenSlug(null), [])
 
   const activeRecipe = openSlug ? getRecipeBySlug(openSlug) ?? null : null
+
+  useSmoothScroll()
 
   return (
     <main className="relative">

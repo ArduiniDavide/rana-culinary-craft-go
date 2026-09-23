@@ -49,7 +49,7 @@ export function Navbar() {
             className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream/60 focus-visible:ring-offset-2 focus-visible:ring-offset-anthracite rounded-lg"
           >
             <Logo
-              className={`h-9 w-20 transition-all duration-500 sm:h-12 sm:w-28 ${
+              className={`h-8 w-24 transition-all duration-500 sm:h-10 sm:w-32 ${
                 scrolled ? "shadow-md shadow-anthracite/10" : "drop-shadow-md"
               }`}
             />

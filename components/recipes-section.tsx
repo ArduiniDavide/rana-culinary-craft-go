@@ -1,9 +1,15 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { gsap } from "gsap"
+import { ScrollToPlugin } from "gsap/ScrollToPlugin"
 import { recipes } from "@/lib/recipes"
 import { RecipeCard } from "@/components/recipe-card"
 import { AnimatedText } from "@/components/animated-text"
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollToPlugin)
+}
 
 type RecipesSectionProps = {
   onOpenRecipe: (slug: string) => void
@@ -17,12 +23,18 @@ export function RecipesSection({ onOpenRecipe }: RecipesSectionProps) {
   const scrollByAmount = (dir: 1 | -1) => {
     const el = scrollerRef.current
     if (!el) return
-    el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" })
+    const target = el.scrollLeft + dir * el.clientWidth * 0.85
+    gsap.to(el, {
+      scrollTo: { x: target },
+      duration: 0.8,
+      ease: "power3.out",
+    })
   }
 
   const onPointerDown = (e: React.PointerEvent) => {
     const el = scrollerRef.current
     if (!el) return
+    gsap.killTweensOf(el)
     setIsDown(true)
     dragState.current = { startX: e.clientX, scrollLeft: el.scrollLeft, moved: false }
   }

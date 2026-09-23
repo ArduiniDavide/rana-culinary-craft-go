@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-5 sm:px-10 lg:px-16">
         <div className="flex flex-col gap-12 border-b border-cream/10 pb-14 sm:flex-row sm:justify-between">
           <div className="max-w-sm">
-            <Logo invert className="text-2xl" />
+            <Logo invert className="h-12 w-40 sm:h-14 sm:w-48" />
             <p className="mt-5 text-sm leading-relaxed text-cream/60">
               Pasta fresca artigianale dal 1962. Ingredienti veri, ricette di famiglia e la cura di chi crede nel
               buon cibo condiviso a tavola.

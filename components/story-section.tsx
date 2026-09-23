@@ -72,7 +72,7 @@ export function StorySection() {
         start: "top top",
         end: () => `+=${distance}`,
         pin: true,
-        scrub: 1,
+        scrub: 1.2,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
